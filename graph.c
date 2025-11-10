@@ -4,7 +4,6 @@
 
 #define vertex int
 
-// ------------------ ESTRUCTURAS ------------------
 
 typedef struct node *link;
 struct node {
@@ -19,7 +18,6 @@ struct graph {
     link *adj;
 };
 
-// ------------------ FUNCIONES BÁSICAS ------------------
 
 static link NEWnode(vertex w, link next) {
     link a = malloc(sizeof(struct node));
@@ -54,7 +52,6 @@ void GRAPHshow(Graph G) {
     }
 }
 
-// ------------------ FUNCIONES DEL LABORATORIO ------------------
 
 // 1. Verifica si un vértice está aislado
 bool GRAPHisIsolated(Graph G, vertex v) {
@@ -149,7 +146,6 @@ int UGRAPHdegrees(Graph G) {
     return max;
 }
 
-// ------------------ MAIN DE PRUEBA ------------------
 
 int main() {
     Graph G = GRAPHinit(6);
