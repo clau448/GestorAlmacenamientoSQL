@@ -1,8 +1,15 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 #define vertex int
+
+// ------------------ VARIABLES GLOBALES DFS ------------------
+
+static int cnt;
+static int pre[1000];
+static int indent = 0;
 
 // ------------------ ESTRUCTURAS ------------------
 
@@ -149,6 +156,53 @@ int UGRAPHdegrees(Graph G) {
     return max;
 }
 
+// ------------------ DFS CON RASTREO ------------------
+
+void printIndent() {
+    for (int i = 0; i < indent; i++)
+        printf("  ");
+}
+
+static void dfsR(Graph G, vertex v) {
+    pre[v] = cnt++;
+    indent++;
+
+    for (link a = G->adj[v]; a != NULL; a = a->next) {
+        vertex w = a->w;
+
+        printIndent();
+        printf("%d-%d", v, w);
+
+        if (pre[w] == -1) {
+            printf(" dfsR(G,%d)\n", w);
+            dfsR(G, w);
+        } else {
+            printf("\n");
+        }
+    }
+
+    indent--;
+    printIndent();
+    printf("%d\n", v);
+}
+
+void GRAPHdfs(Graph G) {
+    cnt = 0;
+    indent = 0;
+
+    for (vertex v = 0; v < G->V; v++)
+        pre[v] = -1;
+
+    for (vertex v = 0; v < G->V; v++) {
+        if (pre[v] == -1) {
+            printIndent();
+            printf("%d dfsR(G,%d)\n", v, v);
+            dfsR(G, v);
+        }
+    }
+}
+
+
 // ------------------ MAIN DE PRUEBA ------------------
 
 int main() {
@@ -163,32 +217,12 @@ int main() {
     GRAPHinsertArc(G, 3, 1);
     GRAPHinsertArc(G, 5, 3);
 
-    printf("\nLista de adyacencia del grafo:\n");
-    GRAPHshow(G);
-
-    printf("\nGrado de salida de 1: %d\n", GRAPHoutdeg(G, 1));
-    printf("Grado de entrada de 5: %d\n", GRAPHindeg(G, 5));
-    printf("¿0 y 5 son adyacentes? %s\n", GRAPHadjacent(G, 0, 5) ? "Sí" : "No");
-    printf("¿El vértice 4 está aislado? %s\n", GRAPHisIsolated(G, 4) ? "Sí" : "No");
-
-    printf("\n¿El grafo es no dirigido? %s\n", GRAPHundir(G) ? "Sí" : "No");
-
-    printf("\nEliminando arco 0->1...\n");
-    GRAPHremoveArc(G, 0, 1);
-    GRAPHshow(G);
-
-    printf("\nInsertando arista no dirigida (2-3)...\n");
-    UGRAPHinsertEdge(G, 2, 3);
-    GRAPHshow(G);
-
-    printf("\nEliminando arista (2-3)...\n");
-    UGRAPHremoveEdge(G, 2, 3);
-    GRAPHshow(G);
-
-    printf("\nGrado máximo del grafo: %d\n", UGRAPHdegrees(G));
+    printf("\n--- RASTREO DFS ---\n");
+    GRAPHdfs(G);
 
     GRAPHdestroy(G);
     printf("\nMemoria liberada correctamente.\n");
+
 
     return 0;
 }
