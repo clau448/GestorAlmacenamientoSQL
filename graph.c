@@ -5,6 +5,7 @@
 
 #define vertex int
 
+
 // ------------------ VARIABLES GLOBALES DFS ------------------
 
 static int cnt;
@@ -12,6 +13,8 @@ static int pre[1000];
 static int indent = 0;
 
 // ------------------ ESTRUCTURAS ------------------
+
+
 
 typedef struct node *link;
 struct node {
@@ -26,7 +29,6 @@ struct graph {
     link *adj;
 };
 
-// ------------------ FUNCIONES BÁSICAS ------------------
 
 static link NEWnode(vertex w, link next) {
     link a = malloc(sizeof(struct node));
@@ -61,7 +63,6 @@ void GRAPHshow(Graph G) {
     }
 }
 
-// ------------------ FUNCIONES DEL LABORATORIO ------------------
 
 // 1. Verifica si un vértice está aislado
 bool GRAPHisIsolated(Graph G, vertex v) {
@@ -156,6 +157,7 @@ int UGRAPHdegrees(Graph G) {
     return max;
 }
 
+<<<<<<< HEAD
 // ------------------ DFS CON RASTREO ------------------
 
 void printIndent() {
@@ -204,6 +206,8 @@ void GRAPHdfs(Graph G) {
 
 
 // ------------------ MAIN DE PRUEBA ------------------
+=======
+>>>>>>> 8832bf3c28456960bb6a8c17f64f8cfb65434dc5
 
 int main() {
     Graph G = GRAPHinit(6);
